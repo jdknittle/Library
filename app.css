@@ -8,6 +8,13 @@
   left: 25rem;
 }
 
+.addButton {
+  background-color: green;
+  color: white;
+  margin: 1rem;
+  width: 6rem;
+}
+
 .form {
   width: 25rem;
   height: 20rem;
@@ -51,9 +58,3 @@
 label {
   padding-bottom: 0.5rem;
 }
-/* #book1,
-#book2 {
-  height: 10rem;
-  width: 20rem;
-  border: 1px solid black;
-} */

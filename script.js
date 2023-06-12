@@ -18,6 +18,7 @@ const authorInput = document.querySelector('#author');
 const pagesInput = document.querySelector('#pages');
 const readInput = document.querySelector('#read');
 const bookContainer = document.querySelector('#container');
+const deleteBtn = document.querySelector('.removeBtn');
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -26,20 +27,36 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
+function removeBook(index) {
+  myLibrary.splice(index, 1);
+  displayBooks();
+}
+
 const displayBooks = function () {
-  document.body.innerHTML = '';
+  bookContainer.innerHTML = '';
   for (let i = 0; i < myLibrary.length; i++) {
     const p = document.createElement('p');
     const div = document.createElement('div');
-
+    const button = document.createElement('button');
     div.style.border = '1px solid black';
+    div.style.padding = '1rem';
+    div.style.margin = '.5rem';
     div.style.width = '20rem';
-    div.style.height = '5rem';
+    div.style.height = '7rem';
+    button.innerText = 'Remove Book';
+    button.style.color = 'white';
+    button.style.backgroundColor = 'rgba(253, 29, 29, 1)';
+    button.setAttribute('data-index', i);
+    button.addEventListener('click', function () {
+      const bookIndex = parseInt(button.dataset.index);
+      removeBook(bookIndex);
+    });
 
     p.innerHTML = `Title: ${myLibrary[i].title}<br> Author: ${myLibrary[i].author}<br>Pages: ${myLibrary[i].pages}<br>Read: ${myLibrary[i].read}`;
 
     div.appendChild(p);
-    document.appendChild(div);
+    div.appendChild(button);
+    bookContainer.appendChild(div);
   }
 };
 displayBooks();
@@ -76,3 +93,5 @@ submitBtn.addEventListener('click', function (event) {
     addNewBooks();
   }
 });
+
+//add a button on each book display. when clicked it will remove the appended book from the display and array. Possible solution is using a data-attribute related to the index number in the array
