@@ -18,7 +18,6 @@ const authorInput = document.querySelector('#author');
 const pagesInput = document.querySelector('#pages');
 const readInput = document.querySelector('#read');
 const bookContainer = document.querySelector('#container');
-const deleteBtn = document.querySelector('.removeBtn');
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -37,25 +36,40 @@ const displayBooks = function () {
   for (let i = 0; i < myLibrary.length; i++) {
     const p = document.createElement('p');
     const div = document.createElement('div');
-    const button = document.createElement('button');
+    const buttonContainer = document.createElement('div');
+    const toggleButton = document.createElement('button');
+
+    const deleteButton = document.createElement('button');
+
     div.style.border = '1px solid black';
     div.style.padding = '1rem';
     div.style.margin = '.5rem';
     div.style.width = '20rem';
     div.style.height = '7rem';
-    button.innerText = 'Remove Book';
-    button.style.color = 'white';
-    button.style.backgroundColor = 'rgba(253, 29, 29, 1)';
-    button.setAttribute('data-index', i);
-    button.addEventListener('click', function () {
-      const bookIndex = parseInt(button.dataset.index);
+    toggleButton.innerText = 'Update Read';
+    toggleButton.style.color = 'white';
+    toggleButton.style.backgroundColor = 'blue';
+    toggleButton.addEventListener('click', function () {
+      const book = myLibrary[i];
+      book.read = book.read === 'Yes' ? 'No' : 'Yes';
+      displayBooks();
+    });
+    deleteButton.innerText = 'Remove Book';
+    deleteButton.style.color = 'white';
+    deleteButton.style.backgroundColor = 'rgba(253, 29, 29, 1)';
+    deleteButton.setAttribute('data-index', i);
+    deleteButton.addEventListener('click', function () {
+      const bookIndex = parseInt(deleteButton.dataset.index);
       removeBook(bookIndex);
     });
 
     p.innerHTML = `Title: ${myLibrary[i].title}<br> Author: ${myLibrary[i].author}<br>Pages: ${myLibrary[i].pages}<br>Read: ${myLibrary[i].read}`;
 
+    buttonContainer.appendChild(toggleButton);
+    buttonContainer.appendChild(deleteButton);
+
     div.appendChild(p);
-    div.appendChild(button);
+    div.appendChild(buttonContainer);
     bookContainer.appendChild(div);
   }
 };
@@ -93,5 +107,3 @@ submitBtn.addEventListener('click', function (event) {
     addNewBooks();
   }
 });
-
-//add a button on each book display. when clicked it will remove the appended book from the display and array. Possible solution is using a data-attribute related to the index number in the array
